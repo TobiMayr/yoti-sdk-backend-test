@@ -10,8 +10,8 @@ public class HooverService {
         Do stuff
          */
         HooverResult hooverResult = new HooverResult();
-        hooverResult.setCoords(new int[]{1, 2});
-        hooverResult.setPatches(3);
+        hooverResult.setCoords(new int[]{1, 3});
+        hooverResult.setPatches(1);
         return hooverResult;
     }
 }

@@ -1,28 +1,31 @@
 package com.tobimayr.hoover.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@ActiveProfiles("test")
 @WebMvcTest(HooverController.class)
 public class HooverEndpointTest {
 
+    private ObjectMapper mapper = new ObjectMapper();
+
+    @SneakyThrows
     private static String getJsonContent(String filename) {
-        return String.valueOf(new ClassPathResource("/json/" + filename + ".json"));
+        byte[] bytes = new ClassPathResource("/json/" + filename + ".json").getInputStream().readAllBytes();
+        return new String(bytes);
     }
 
     @Autowired
-    protected MockMvc mvc;
+    private MockMvc mvc;
 
     @Test
     public void testHooverStart_ok() throws Exception {
@@ -40,7 +43,7 @@ public class HooverEndpointTest {
     @Test
     public void testHooverStart_missingAttribute() throws Exception {
 
-        String inputJson = getJsonContent("input_2_invalid_missing_attribute");
+        String inputJson = getJsonContent("2_input_invalid_missing_attribute");
         String expectedOutputJson = getJsonContent("2_output_invalid_missing_attribute");
 
         mvc.perform(post("/hoover/start")
