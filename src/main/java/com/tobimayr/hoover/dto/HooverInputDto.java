@@ -1,5 +1,6 @@
 package com.tobimayr.hoover.dto;
 
+import com.tobimayr.hoover.enums.Direction;
 import com.tobimayr.hoover.model.HooverInput;
 import lombok.Data;
 
@@ -19,10 +20,10 @@ public class HooverInputDto {
 
     public HooverInput convertToEntity() {
         HooverInput hooverInput = new HooverInput();
-        hooverInput.setRoomSize(new Point(roomSize[0], roomSize[1]));
+        hooverInput.setRoom(new Rectangle(roomSize[0], roomSize[1]));
         hooverInput.setCoords(new Point(coords[0], coords[1]));
         hooverInput.setPatches(getPatches());
-        hooverInput.setInstructions(instructions);
+        hooverInput.setInstructions(getDirections());
         return hooverInput;
     }
 
@@ -34,4 +35,11 @@ public class HooverInputDto {
         return patchesList;
     }
 
+    private ArrayList<Direction> getDirections() {
+        ArrayList<Direction> directionList = new ArrayList<>();
+        for (String direction : instructions.split("")) {
+            directionList.add(Direction.valueOf(direction));
+        }
+        return directionList;
+    }
 }

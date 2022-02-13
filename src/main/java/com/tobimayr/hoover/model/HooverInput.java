@@ -1,5 +1,6 @@
 package com.tobimayr.hoover.model;
 
+import com.tobimayr.hoover.enums.Direction;
 import lombok.Data;
 
 import java.awt.*;
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 @Data
 public class HooverInput implements Serializable {
 
-    private Point roomSize;
+    private Rectangle room;
 
     private Point coords;
 
     private ArrayList<Point> patches;
 
-    private String instructions;
+    private ArrayList<Direction> instructions;
 }
