@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: hoover
+  profiles:
+    active: ${ENVIRONMENT:development}
+---
+spring:
+  profiles: development
+---
+spring:
+  profiles: test
+---
+spring:
+  profiles: production
