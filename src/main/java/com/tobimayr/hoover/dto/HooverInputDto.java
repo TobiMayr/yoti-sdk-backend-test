@@ -4,18 +4,25 @@ import com.tobimayr.hoover.enums.Direction;
 import com.tobimayr.hoover.model.HooverInput;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.awt.*;
 import java.util.ArrayList;
 
 @Data
 public class HooverInputDto {
 
+    @NotNull(message = "Attribute missing: roomSize")
     private int[] roomSize;
 
+    @NotNull(message = "Attribute missing: coords")
     private int[] coords;
 
+    @NotNull(message = "Attribute missing: patches")
     private int[][] patches;
 
+    @NotNull(message = "Attribute missing: instructions")
+    @Pattern(regexp = "^[NSWEnswe]*$", message = "Instructions are invalid. Allowed: 'N' 'E' 'S' 'W' (upper or lower)")
     private String instructions;
 
     public HooverInput convertToEntity() {
