@@ -1,7 +1,6 @@
 package com.tobimayr.hoover.controller;
 
 import com.tobimayr.hoover.model.HooverInput;
-import com.tobimayr.hoover.model.HooverResult;
 import com.tobimayr.hoover.service.HooverService;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,15 +17,14 @@ import javax.validation.Valid;
 @RequestMapping("/hoover")
 public class HooverController {
 
-    HooverService hooverService = new HooverService();
-
+    private final HooverService hooverService = new HooverService();
 
     @Operation(summary = "Starts hoovering")
     @PostMapping(value = "/start",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HooverResult> start(@Parameter(description = "Valid start instructions")
-                                        @Valid @RequestPart("dto") HooverInput hooverInput) {
+    public ResponseEntity start(@Parameter(description = "Valid start instructions")
+                                @Valid @RequestBody HooverInput hooverInput) {
 
         log.info("In HooverController.start() method");
 
