@@ -2,16 +2,18 @@ package com.tobimayr.hoover.model;
 
 import lombok.Data;
 
+import java.awt.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 @Data
 public class HooverInput implements Serializable {
 
-    private int[] roomSize;
+    private Point roomSize;
 
-    private int[] chords;
+    private Point coords;
 
-    private int[][] patches;
+    private ArrayList<Point> patches;
 
     private String instructions;
 }
