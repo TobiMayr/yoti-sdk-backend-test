@@ -79,4 +79,16 @@ public class HooverEndpointTest {
                 .andExpect(content().json(expectedOutputJson));
     }
 
+    @Test
+    public void testHooverStartPatchOnCoords_ok() throws Exception {
+
+        String inputJson = getJsonContent("5_input_success_patch_on_coords");
+        String expectedOutputJson = getJsonContent("5_output_success_patch_on_coords");
+
+        mvc.perform(post("/hoover/start")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJson))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedOutputJson));
+    }
 }
