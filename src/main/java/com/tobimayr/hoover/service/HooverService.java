@@ -18,7 +18,7 @@ public class HooverService {
     private ModelMapper modelMapper = new ModelMapper();
 
     public HooverResultDto start(HooverInput hooverInput) {
-        HooverResult hooverResult = new HooverResult();
+
         Point currentPosition = hooverInput.getCoords();
 
         if (!hooverInput.getRoom().contains(currentPosition)) {
@@ -27,15 +27,19 @@ public class HooverService {
 
         int patchesCount = 0;
         for (Direction direction : hooverInput.getDirections()) {
-            patchesCount += move(direction, currentPosition, hooverInput.getRoom(), hooverInput.getPatches());
+            patchesCount += hooverCurrentPosition(hooverInput.getPatches(), currentPosition);
+
+            movePosition(direction, currentPosition, hooverInput.getRoom());
         }
 
-        hooverResult.setCoords(currentPosition);
-        hooverResult.setPatches(patchesCount);
+        HooverResult hooverResult = HooverResult.builder()
+                .coords(currentPosition)
+                .patches(patchesCount)
+                .build();
         return modelMapper.map(hooverResult, HooverResultDto.class);
     }
 
-    private int move(Direction direction, Point currentPosition, Rectangle room, ArrayList<Point> patches) {
+    private void movePosition(Direction direction, Point currentPosition, Rectangle room) {
 
         switch (direction) {
             case N:
@@ -67,8 +71,11 @@ public class HooverService {
                 }
                 break;
         }
-        for (Point patch: patches) {
-            if (currentPosition.equals(patch)){
+    }
+
+    private int hooverCurrentPosition(ArrayList<Point> patches, Point currentPosition) {
+        for (Point patch : patches) {
+            if (currentPosition.equals(patch)) {
                 patches.remove(patch);
                 return 1;
             }
