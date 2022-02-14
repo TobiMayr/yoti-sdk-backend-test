@@ -16,14 +16,4 @@ public class HooverResult implements Serializable {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     String error;
-
-    public HooverResultDto convertToDto() {
-        HooverResultDto hooverResultDto = new HooverResultDto();
-        hooverResultDto.setPatches(patches);
-        int x = (int) coords.getX();
-        int y = (int) coords.getY();
-        int[] coords = new int[]{x, y};
-        hooverResultDto.setCoords(coords);
-        return hooverResultDto;
-    }
 }

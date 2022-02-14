@@ -12,10 +12,9 @@ public class HooverResultDto {
 
     int patches;
 
-    public HooverResult convertToEntity() {
-        HooverResult hooverResult = new HooverResult();
-        hooverResult.setPatches(patches);
-        hooverResult.setCoords(new Point(coords[0], coords[1]));
-        return hooverResult;
+    public void setCoords(Point coords) {
+        int x = (int) coords.getX();
+        int y = (int) coords.getY();
+        this.coords = new int[]{x, y};
     }
 }

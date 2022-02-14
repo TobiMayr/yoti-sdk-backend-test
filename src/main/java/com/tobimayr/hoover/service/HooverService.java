@@ -5,6 +5,7 @@ import com.tobimayr.hoover.enums.Direction;
 import com.tobimayr.hoover.model.HooverInput;
 import com.tobimayr.hoover.model.HooverResult;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 @Service
 public class HooverService {
 
+    private ModelMapper modelMapper = new ModelMapper();
+
     public HooverResultDto start(HooverInput hooverInput) {
         HooverResult hooverResult = new HooverResult();
         Point currentPosition = hooverInput.getCoords();
@@ -22,14 +25,14 @@ public class HooverService {
             throw new IllegalArgumentException("Coords are invalid. Outside of the room");
         }
 
-        int patches = 0;
-        for (Direction direction : hooverInput.getInstructions()) {
-            patches += move(direction, currentPosition, hooverInput.getRoom(), hooverInput.getPatches());
+        int patchesCount = 0;
+        for (Direction direction : hooverInput.getDirections()) {
+            patchesCount += move(direction, currentPosition, hooverInput.getRoom(), hooverInput.getPatches());
         }
 
         hooverResult.setCoords(currentPosition);
-        hooverResult.setPatches(patches);
-        return hooverResult.convertToDto();
+        hooverResult.setPatches(patchesCount);
+        return modelMapper.map(hooverResult, HooverResultDto.class);
     }
 
     private int move(Direction direction, Point currentPosition, Rectangle room, ArrayList<Point> patches) {

@@ -31,9 +31,10 @@ public class HooverController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity start(@Parameter(description = "Valid start instructions")
                                 @Valid @RequestBody HooverInputDto hooverInputDto) throws ParseException {
-        log.info("In HooverController.start() method");
-        HooverInput hooverInput = hooverInputDto.convertToEntity();
 
+        log.info("In HooverController.start() method. hooverInputDto=[{}]", hooverInputDto);
+
+        HooverInput hooverInput = modelMapper.map(hooverInputDto, HooverInput.class);
         return ResponseEntity.ok(hooverService.start(hooverInput));
     }
 }

@@ -16,5 +16,5 @@ public class HooverInput implements Serializable {
 
     private ArrayList<Point> patches;
 
-    private ArrayList<Direction> instructions;
+    private ArrayList<Direction> directions;
 }
