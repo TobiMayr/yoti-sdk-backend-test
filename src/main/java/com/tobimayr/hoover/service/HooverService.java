@@ -17,7 +17,11 @@ public class HooverService {
 
     private ModelMapper modelMapper = new ModelMapper();
 
+    // private final DatabaseService databaseService;
+
     public HooverResultDto start(HooverInput hooverInput) {
+
+        // databaseService.saveInput(hooverInput);
 
         Point currentPosition = hooverInput.getCoords();
 

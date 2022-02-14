@@ -1,6 +1,5 @@
 package com.tobimayr.hoover.dto;
 
-import com.tobimayr.hoover.model.HooverResult;
 import lombok.Data;
 
 import java.awt.*;
