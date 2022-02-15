@@ -1,19 +1,16 @@
 package com.tobimayr.hoover.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.awt.*;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class HooverResultDto {
 
-    int[] coords;
+    private int[] coords;
 
-    int patches;
+    private int patches;
 
-    public void setCoords(Point coords) {
-        int x = (int) coords.getX();
-        int y = (int) coords.getY();
-        this.coords = new int[]{x, y};
-    }
 }

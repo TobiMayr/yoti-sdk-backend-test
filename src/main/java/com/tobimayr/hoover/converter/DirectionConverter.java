@@ -3,9 +3,10 @@ package com.tobimayr.hoover.converter;
 import com.tobimayr.hoover.enums.Direction;
 
 import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 import java.util.ArrayList;
 
-
+@Converter
 public class DirectionConverter implements AttributeConverter<ArrayList<Direction>, String> {
 
 
@@ -17,8 +18,12 @@ public class DirectionConverter implements AttributeConverter<ArrayList<Directio
     }
 
     @Override
-    public ArrayList<Direction> convertToEntityAttribute(String s) {
-        return null;
+    public ArrayList<Direction> convertToEntityAttribute(String directionsString) {
+        ArrayList<Direction> directionList = new ArrayList<>();
+        for (String direction : directionsString.split("")) {
+            directionList.add(Direction.valueOf(direction));
+        }
+        return directionList;
     }
 
 }

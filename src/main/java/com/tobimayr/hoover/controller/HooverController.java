@@ -20,7 +20,8 @@ import java.text.ParseException;
 @RequestMapping("/hoover")
 public class HooverController {
 
-    private final HooverService hooverService = new HooverService();
+    @Autowired
+    private HooverService hooverService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -30,7 +31,7 @@ public class HooverController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity start(@Parameter(description = "Valid start instructions")
-                                @Valid @RequestBody HooverInputDto hooverInputDto) throws ParseException {
+                                @Valid @RequestBody HooverInputDto hooverInputDto) {
 
         log.info("In HooverController.start() method. hooverInputDto=[{}]", hooverInputDto);
 

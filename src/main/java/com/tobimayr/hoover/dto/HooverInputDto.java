@@ -1,7 +1,6 @@
 package com.tobimayr.hoover.dto;
 
 import com.tobimayr.hoover.enums.Direction;
-import com.tobimayr.hoover.model.HooverInput;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -31,8 +30,8 @@ public class HooverInputDto {
 
     public ArrayList<Point> getPatches() {
         ArrayList<Point> patchesList = new ArrayList<>();
-        for (int i = 0; i < patches.length; i++) {
-            patchesList.add(new Point(patches[i][0], patches[i][1]));
+        for (int[] patch : patches) {
+            patchesList.add(new Point(patch[0], patch[1]));
         }
         return patchesList;
     }

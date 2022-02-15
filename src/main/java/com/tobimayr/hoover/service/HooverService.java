@@ -4,8 +4,11 @@ import com.tobimayr.hoover.dto.HooverResultDto;
 import com.tobimayr.hoover.enums.Direction;
 import com.tobimayr.hoover.model.HooverInput;
 import com.tobimayr.hoover.model.HooverResult;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -13,15 +16,19 @@ import java.util.ArrayList;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class HooverService {
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
-    // private final DatabaseService databaseService;
+    @Autowired
+    private DatabaseService databaseService;
 
     public HooverResultDto start(HooverInput hooverInput) {
 
-        // databaseService.saveInput(hooverInput);
+        databaseService.saveInput(hooverInput);
 
         Point currentPosition = hooverInput.getCoords();
 
@@ -46,34 +53,34 @@ public class HooverService {
     private void movePosition(Direction direction, Point currentPosition, Rectangle room) {
 
         switch (direction) {
-            case N:
+            case N -> {
                 log.info("Going North");
                 currentPosition.translate(0, 1);
                 if (!room.contains(currentPosition)) {
                     currentPosition.translate(0, -1);
                 }
-                break;
-            case E:
+            }
+            case E -> {
                 log.info("Going East");
                 currentPosition.translate(1, 0);
                 if (!room.contains(currentPosition)) {
                     currentPosition.translate(-1, 0);
                 }
-                break;
-            case S:
+            }
+            case S -> {
                 log.info("Going South");
                 currentPosition.translate(0, -1);
                 if (!room.contains(currentPosition)) {
                     currentPosition.translate(0, 1);
                 }
-                break;
-            case W:
+            }
+            case W -> {
                 log.info("Going West");
                 currentPosition.translate(-1, 0);
                 if (!room.contains(currentPosition)) {
                     currentPosition.translate(1, 0);
                 }
-                break;
+            }
         }
     }
 
