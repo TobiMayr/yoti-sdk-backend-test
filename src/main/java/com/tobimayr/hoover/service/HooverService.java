@@ -43,10 +43,12 @@ public class HooverService {
             movePosition(direction, currentPosition, hooverInput.getRoom());
         }
 
-        HooverResult hooverResult = HooverResult.builder()
-                .coords(currentPosition)
-                .patches(patchesCount)
-                .build();
+        HooverResult hooverResult = new HooverResult();
+        hooverResult.setCoords(currentPosition);
+        hooverResult.setPatches(patchesCount);
+
+        databaseService.saveResult(hooverResult);
+
         return modelMapper.map(hooverResult, HooverResultDto.class);
     }
 
