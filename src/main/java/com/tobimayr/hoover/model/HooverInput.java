@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 @Data
+@Table(name = "input")
 @Entity
 public class HooverInput implements Serializable {
 
@@ -20,12 +21,15 @@ public class HooverInput implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "room_size")
     @Convert(converter = RoomConverter.class)
     private Rectangle room;
 
+    @Column(name = "start_position")
     @Convert(converter = CoordsConverter.class)
     private Point coords;
 
+    @Column(name = "patches_in_room")
     @Convert(converter = PatchesConverter.class)
     private ArrayList<Point> patches;
 

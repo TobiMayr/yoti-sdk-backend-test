@@ -46,6 +46,7 @@ public class HooverService {
         HooverResult hooverResult = new HooverResult();
         hooverResult.setCoords(currentPosition);
         hooverResult.setPatches(patchesCount);
+        hooverResult.setHooverInput(hooverInput);
 
         databaseService.saveResult(hooverResult);
 
