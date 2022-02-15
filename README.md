@@ -3,21 +3,40 @@
 ## Description
 
 Spring boot api receiving instructions to hoover a room. 
-The input instructions as well as the results are saved to a embedded h2 database.
+The input instructions as well as the results are saved to an embedded `h2` database.
 
 ## Running the App
 
 ### Using Docker
 
-
+The Dockerfile builds the package. To build the container:
+```
+docker build -t hoover .
+```
+To run it:
+```
+docker run -p 8080:8080 hoover
+```
 
 ## Usage
 
 ### To send instructions:
 
 #### Request:
-```
-curl [...]
+```shell
+curl --request POST \
+  --url http://localhost:8080/hoover/start \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "roomSize" : [5, 5],
+  "coords" : [1, 2],
+  "patches" : [
+    [1, 0],
+    [2, 2],
+    [2, 3]
+  ],
+  "instructions" : "NNESEESWNWW"
+}'
 ```
 #### Response:
 ```
@@ -29,9 +48,13 @@ curl [...]
 
 ## Database
 
-The `h2` database contains two tables, `input` and `result`,
+The `h2` database contains two tables, `input` and `result`.
+
+### input table
 
 ![input table](input_table.png?raw=true "input Table")
+
+### result table
 ![result table](result_table.png?raw=true "result Table")
 
 The two tables can be joined via a foreign key (input_id) in the result table:
@@ -43,20 +66,18 @@ join input on input.id = result.input_id
 
 ![joined table](joined_table.png?raw=true "joined Table")
 
-## Tests
-
-
-
-## FAQ
-
 ## Ideas for improvement
 
 ### Code
-- use interceptor to write automatically to the db on every request
+- use an interceptor to write automatically to the db on every request
   - this would add entries even though the request never entered the hooverService.start() method
 - write errors to the database
 - refactor the converters and remove code duplication
+- improve database representation of entities (instead of strings for coords) 
 - add swagger doc
+- use different profiles with different configurations
+- ensure database transactions are ACID
+- implement custom exceptions
 
 ### Scalability
 - create cloud instance for the database (e.g. AWS RDS)
