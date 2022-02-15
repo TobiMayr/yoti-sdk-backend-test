@@ -1,3 +1,69 @@
+# Hoover Spring Boot App
+
+## Description
+
+Spring boot api receiving instructions to hoover a room. 
+The input instructions as well as the results are saved to a embedded h2 database.
+
+## Running the App
+
+### Using Docker
+
+
+
+## Usage
+
+### To send instructions:
+
+#### Request:
+```
+curl [...]
+```
+#### Response:
+```
+{
+  "coords" : [1, 3],
+  "patches" : 1
+}
+```
+
+## Database
+
+The `h2` database contains two tables, `input` and `result`,
+
+![input table](input_table.png?raw=true "input Table")
+![result table](result_table.png?raw=true "result Table")
+
+The two tables can be joined via a foreign key (input_id) in the result table:
+```sql
+SELECT input.id as run_id, input.start_position, result.end_position, input.directions, input.patches_in_room, input.room_size, result.cleaned_patches
+FROM RESULT
+join input on input.id = result.input_id 
+```
+
+![joined table](joined_table.png?raw=true "joined Table")
+
+## Tests
+
+
+
+## FAQ
+
+## Ideas for improvement
+
+### Code
+- use interceptor to write automatically to the db on every request
+  - this would add entries even though the request never entered the hooverService.start() method
+- write errors to the database
+- refactor the converters and remove code duplication
+- add swagger doc
+
+### Scalability
+- create cloud instance for the database (e.g. AWS RDS)
+- run this API in kubernetes (e.g. on AWS EKS). Scaling horizontally, accessing same RDS (which also can be scaled)
+
+# Original task description starting now
+
 Yoti SDK Back-end test
 ======================
 
