@@ -49,7 +49,7 @@ public class HooverService {
         hooverResult.setHooverInput(hooverInput);
 
         databaseService.saveResult(hooverResult);
-
+        log.info("Finished hoovering. hooverResult=[{}]", hooverResult);
         return modelMapper.map(hooverResult, HooverResultDto.class);
     }
 
@@ -57,34 +57,41 @@ public class HooverService {
 
         switch (direction) {
             case N -> {
-                log.info("Going North");
+                logCurrentPosition(currentPosition, direction);
                 currentPosition.translate(0, 1);
                 if (!room.contains(currentPosition)) {
                     currentPosition.translate(0, -1);
                 }
             }
             case E -> {
-                log.info("Going East");
+                logCurrentPosition(currentPosition, direction);
                 currentPosition.translate(1, 0);
                 if (!room.contains(currentPosition)) {
                     currentPosition.translate(-1, 0);
                 }
             }
             case S -> {
-                log.info("Going South");
+                logCurrentPosition(currentPosition, direction);
                 currentPosition.translate(0, -1);
                 if (!room.contains(currentPosition)) {
                     currentPosition.translate(0, 1);
                 }
             }
             case W -> {
-                log.info("Going West");
+                logCurrentPosition(currentPosition, direction);
                 currentPosition.translate(-1, 0);
                 if (!room.contains(currentPosition)) {
                     currentPosition.translate(1, 0);
                 }
             }
         }
+    }
+
+    private void logCurrentPosition(Point currentPosition, Direction direction){
+        log.info("direction=[{}]. \tcurrentPosition=[{}], [{}]",
+                direction,
+                (int) currentPosition.getX(),
+                (int) currentPosition.getY());
     }
 
     private int hooverCurrentPosition(ArrayList<Point> patches, Point currentPosition) {
