@@ -71,6 +71,19 @@ public class HooverServiceTest {
         assertEquals(expectedHooverResult, hooverService.start(hooverInput));
     }
 
+    @Test
+    public void testHooverEverything_ok() throws Exception {
+
+        String inputJson = getJsonContent("6_input_success_hoover_everything");
+        String expectedOutputJson = getJsonContent("6_output_success_hoover_everything");
+
+        hooverService = new HooverService(modelMapper, databaseService);
+        HooverInput hooverInput = getHooverInputFromString(inputJson);
+        HooverResultDto expectedHooverResult = objectMapper.readValue(expectedOutputJson, HooverResultDto.class);
+
+        assertEquals(expectedHooverResult, hooverService.start(hooverInput));
+    }
+
     @SneakyThrows
     public HooverInput getHooverInputFromString(String inputJson) {
         HooverInputDto hooverInputDto = objectMapper.readValue(inputJson, HooverInputDto.class);

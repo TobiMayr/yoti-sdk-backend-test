@@ -16,13 +16,18 @@ public class PatchesConverter implements AttributeConverter<ArrayList<Point>, St
             resultStringBuilder.append(String.format("%s:%s,", point.x, point.y));
         }
         String resultString = resultStringBuilder.toString();
-        return resultString.substring(0, resultString.length() - 1);
+        if (resultString.length() > 0) {
+            return resultString.substring(0, resultString.length() - 1);
+        }
+        return "";
     }
 
     @Override
     public ArrayList<Point> convertToEntityAttribute(String s) {
         ArrayList<Point> patchesList = new ArrayList<>();
         for (String pointString : s.split(",")) {
+            if (pointString.equals(""))
+                return patchesList;
             String[] pointArray = pointString.split(":");
             Point point = new Point(Integer.parseInt(pointArray[0]), Integer.parseInt(pointArray[1]));
             patchesList.add(point);
